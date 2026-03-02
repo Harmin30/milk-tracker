@@ -707,7 +707,6 @@ def generate_bill():
     )
 
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-    app.run()
+# Create tables automatically when app starts
+with app.app_context():
+    db.create_all()
