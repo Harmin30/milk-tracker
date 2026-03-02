@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+
+    <h4 class="text-center mb-3">
+        <i class="fa-solid fa-user-gear me-2"></i>
+        Your Profile
+    </h4>
+
+    <form method="POST">
+
+        <!-- Basic Info -->
+        <div class="mb-4">
+
+            <div class="input-group-custom">
+                <i class="fa-solid fa-user"></i>
+                <input type="text"
+                       name="name"
+                       class="form-control"
+                       placeholder="Full Name"
+                       value="{{ profile.name or '' }}">
+            </div>
+
+            <div class="textarea-group mb-4">
+    <i class="fa-solid fa-location-dot"></i>
+    <textarea name="address"
+              class="form-control"
+              rows="3"
+              placeholder="Address">{{ profile.address or '' }}</textarea>
+</div>
+
+        </div>
+
+        <!-- Milk Pricing Section -->
+        <div class="summary-card mb-4">
+
+            <div class="summary-header">
+                🥛 Milk Pricing
+            </div>
+
+            <div class="mb-3">
+                <label class="milk-label buffalo">
+                    Buffalo Milk Price (per liter)
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">₹</span>
+                    <input type="number"
+                           step="0.01"
+                           name="buffalo_price"
+                           class="form-control"
+                           placeholder="Enter buffalo price"
+                           value="{{ profile.buffalo_price or '' }}">
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label class="milk-label cow">
+                    Cow Milk Price (per liter)
+                </label>
+                <div class="input-group">
+                    <span class="input-group-text">₹</span>
+                    <input type="number"
+                           step="0.01"
+                           name="cow_price"
+                           class="form-control"
+                           placeholder="Enter cow price"
+                           value="{{ profile.cow_price or '' }}">
+                </div>
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            <i class="fa-solid fa-floppy-disk me-1"></i>
+            Update Profile
+        </button>
+
+    </form>
+
+    <!-- Info Box -->
+    <div class="mt-4 p-3 summary-card">
+
+        <div class="d-flex align-items-start gap-2">
+            <i class="fa-solid fa-circle-info mt-1 text-primary"></i>
+            <small class="text-muted">
+                These details are used to automatically generate your milk bill PDF.
+                Please ensure milk prices are correct before generating bills.
+            </small>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

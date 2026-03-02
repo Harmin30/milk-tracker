@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="card shadow p-4">
+  <h4 class="text-center mb-3">Edit Milk Entry</h4>
+
+  <form method="POST">
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input
+        type="date"
+        name="date"
+        class="form-control"
+        max="{{ datetime.today().strftime('%Y-%m-%d') }}"
+        value="{{ entry.date.strftime('%Y-%m-%d') }}"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+  <label>Milk Type</label>
+  <select name="milk_type" class="form-select">
+
+    <option value="Buffalo"
+      {% if entry.milk_type == "Buffalo" %}selected{% endif %}>
+      Buffalo
+    </option>
+
+    <option value="Cow"
+      {% if entry.milk_type == "Cow" %}selected{% endif %}>
+      Cow
+    </option>
+
+  </select>
+</div>
+
+    <div class="mb-3">
+      <label>Liters</label>
+      <input
+        type="number"
+        step="0.1"
+        name="liters"
+        class="form-control"
+        value="{{ entry.liters }}"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Update Entry</button>
+  </form>
+</div>
+
+{% endblock %}

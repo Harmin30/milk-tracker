@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-3">
+    <h4 class="text-center mb-4">Monthly Summary</h4>
+
+    {% if summary_data %}
+
+        {% for month, data in summary_data %}
+        <div class="summary-card mb-4">
+
+            <div class="summary-header">
+                {{ month }}
+            </div>
+
+            <div class="summary-content">
+
+                <div class="milk-row">
+                    <span class="milk-label buffalo">Buffalo</span>
+                    <span class="milk-info">
+                        {{ "%.2f"|format(data.Buffalo_liters) }} L
+                        <strong>₹ {{ "%.2f"|format(data.Buffalo_amount) }}</strong>
+                    </span>
+                </div>
+
+                <div class="milk-row">
+                    <span class="milk-label cow">Cow</span>
+                    <span class="milk-info">
+                        {{ "%.2f"|format(data.Cow_liters) }} L
+                        <strong>₹ {{ "%.2f"|format(data.Cow_amount) }}</strong>
+                    </span>
+                </div>
+
+                <div class="grand-total">
+                    <span>Total</span>
+                    <span>₹ {{ "%.2f"|format(data.Grand_total) }}</span>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-3 gap-2">
+
+            {% if page > 1 %}
+                <a href="{{ url_for('summary', page=page-1) }}" class="pagination-btn">‹</a>
+            {% endif %}
+
+            <span class="align-self-center">
+                Page {{ page }} of {{ total_pages }}
+            </span>
+
+            {% if page < total_pages %}
+                <a href="{{ url_for('summary', page=page+1) }}" class="pagination-btn">›</a>
+            {% endif %}
+
+        </div>
+
+    {% else %}
+        <p class="text-center text-muted">No records found.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card auth-card">
+
+    <div class="auth-title">Create Account ✨</div>
+    <div class="auth-subtitle">Start tracking your milk easily</div>
+
+    <form method="POST">
+
+        <div class="input-group-custom">
+            <i class="fa-solid fa-phone"></i>
+            <input type="text" name="mobile" class="form-control" placeholder="Mobile Number" required>
+        </div>
+
+        <div class="input-group-custom">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+        </div>
+
+        <div class="input-group-custom">
+            <i class="fa-solid fa-check"></i>
+            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 auth-btn">
+            Register
+        </button>
+    </form>
+
+    <div class="auth-footer">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card p-3">
+
+    <h4 class="text-center mb-4">Generate Bill</h4>
+
+    <form method="POST">
+
+        <div class="mb-3">
+            <label>Select Bill Type</label>
+            <select name="bill_type" class="form-control" required onchange="toggleFields(this.value)">
+                <option value="">Choose</option>
+                <option value="custom">Custom Date Range</option>
+                <option value="monthly">Monthly Bill</option>
+            </select>
+        </div>
+
+        <!-- Custom Range -->
+        <div id="custom-range" style="display:none;">
+            <div class="mb-3">
+                <label>From Date</label>
+                <input type="date" name="from_date" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>To Date</label>
+                <input type="date" name="to_date" class="form-control">
+            </div>
+        </div>
+
+        <!-- Monthly -->
+        <div id="monthly-range" style="display:none;">
+            <div class="mb-3">
+                <label>Select Completed Month</label>
+                <select name="month" class="form-control">
+                    <option value="">Select Month</option>
+                    {% for m in completed_months %}
+                        <option value="{{ m.strftime('%Y-%m') }}">
+                            {{ m.strftime('%B %Y') }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-warning w-100">
+            Generate Bill
+        </button>
+
+    </form>
+</div>
+
+<script>
+function toggleFields(value) {
+    document.getElementById("custom-range").style.display =
+        value === "custom" ? "block" : "none";
+
+    document.getElementById("monthly-range").style.display =
+        value === "monthly" ? "block" : "none";
+}
+</script>
+
+{% endblock %}

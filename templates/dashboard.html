@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard-header">
+  <h3>Welcome 👋</h3>
+  <p>Manage your milk records easily</p>
+</div>
+
+<div class="dashboard-grid">
+
+  <a href="{{ url_for('profile') }}" class="dashboard-card">
+    <i class="fa-solid fa-user"></i>
+    Profile
+  </a>
+
+  <a href="{{ url_for('add_entry') }}" class="dashboard-card">
+    <i class="fa-solid fa-plus"></i>
+    Add Entry
+  </a>
+
+  <a href="{{ url_for('records') }}" class="dashboard-card">
+    <i class="fa-solid fa-file-lines"></i>
+    Records
+  </a>
+
+  <a href="{{ url_for('summary') }}" class="dashboard-card">
+    <i class="fa-solid fa-chart-column"></i>
+    Summary
+  </a>
+
+  <a href="{{ url_for('generate_bill') }}" class="dashboard-card full-width">
+    <i class="fa-solid fa-receipt"></i>
+    Generate Bill
+  </a>
+
+  <a href="{{ url_for('logout') }}" class="dashboard-card full-width logout-card">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    Logout
+  </a>
+
+</div>
+
+{% endblock %}

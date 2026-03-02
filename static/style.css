@@ -1,0 +1,261 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f4f6f8, #eef2f7);
+    min-height: 100vh;
+}
+
+/* ================= NAVBAR ================= */
+
+/* NAVBAR */
+.navbar {
+    background: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2c7be5;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    position: relative;
+    padding: 6px 0;
+}
+
+.nav-links a.active {
+    color: #2c7be5;
+    font-weight: 600;
+}
+
+.nav-links a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
+    background: #2c7be5;
+    border-radius: 3px;
+}
+
+.logout {
+    color: #e74c3c;
+}
+
+/* HAMBURGER */
+.menu-toggle {
+    display: none;
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        width: 200px;
+        padding: 20px;
+        gap: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        display: none;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+}
+
+
+
+
+
+/* ================= CONTAINER ================= */
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+/* ================= CARD ================= */
+
+.card {
+    background: white;
+    width: 100%;
+    max-width: 700px;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    animation: fadeIn 0.4s ease-in-out;
+
+}
+
+.card h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ================= FORM ================= */
+
+label {
+    font-size: 14px;
+    margin-top: 10px;
+    display: block;
+    font-weight: 500;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2c7be5;
+    box-shadow: 0 0 0 2px rgba(44,123,229,0.2);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #2c7be5, #1a5fd1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(44,123,229,0.3);
+}
+
+/* ================= TABLE ================= */
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th {
+    background: #f1f4f8;
+    padding: 10px;
+    text-align: left;
+    font-size: 13px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+}
+
+.delete-btn {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ================= TOAST ================= */
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+}
+
+.toast {
+    background: #2c7be5;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 20px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .card {
+        padding: 25px;
+        border-radius: 12px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}
+
