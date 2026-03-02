@@ -7,6 +7,12 @@ from flask import send_file
 from datetime import datetime, timedelta
 import os
 
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+BILL_FOLDER = os.path.join(BASE_DIR, "bills")
+
+if not os.path.exists(BILL_FOLDER):
+    os.makedirs(BILL_FOLDER)
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "dev_secret_key")
 
@@ -30,8 +36,17 @@ else:
 from datetime import timedelta
 
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=7)
+
 app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SECURE'] = os.environ.get("RENDER") is not None
+app.config['REMEMBER_COOKIE_HTTPONLY'] = True
+
+# Secure only in production (HTTPS)
+if os.environ.get("RENDER") is not None:
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['REMEMBER_COOKIE_SECURE'] = True
+else:
+    app.config['SESSION_COOKIE_SECURE'] = False
+    app.config['REMEMBER_COOKIE_SECURE'] = False
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -159,9 +174,11 @@ def login():
 
         if user and check_password_hash(user.password, password):
             login_user(user, remember=remember)
+            flash("Logged in successfully.", "success")
             return redirect(url_for("dashboard"))
         else:
-            flash("Invalid mobile or password.")
+            flash("Invalid mobile or password.", "danger")
+            return redirect(url_for("login"))
 
     return render_template("login.html")
 
@@ -170,7 +187,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("Logged out successfully.")
+    flash("Logged out successfully.", "info")
     return redirect(url_for("login"))
 
 
@@ -191,15 +208,18 @@ def profile():
         buffalo_price = request.form.get("buffalo_price")
         cow_price = request.form.get("cow_price")
 
+        if not name or not address or not buffalo_price or not cow_price:
+            flash("Please fill all fields.", "warning")
+            return redirect(url_for("profile"))
+
         user_profile.name = name
         user_profile.address = address
-
-        user_profile.buffalo_price = float(buffalo_price) if buffalo_price else None
-        user_profile.cow_price = float(cow_price) if cow_price else None
+        user_profile.buffalo_price = float(buffalo_price)
+        user_profile.cow_price = float(cow_price)
 
         db.session.commit()
 
-        flash("Profile updated successfully.")
+        flash("Profile updated successfully.", "success")
         return redirect(url_for("profile"))
 
     return render_template("profile.html", profile=user_profile)
@@ -507,7 +527,10 @@ def generate_bill():
 
         # ================= PDF =================
 
-        file_path = f"milk_bill_{current_user.id}.pdf"
+        file_path = os.path.join(
+    BILL_FOLDER,
+    f"milk_bill_{current_user.id}.pdf"
+)
 
         doc = SimpleDocTemplate(
             file_path,
@@ -684,28 +707,34 @@ def generate_bill():
 
         elements.append(total_table)
 
-        # elements.append(Spacer(1, 0.8 * inch))
-
-        # # Generated On Text
-        # elements.append(
-        #     Paragraph(
-        #         f"<font size=9 color=grey>"
-        #         f"Generated on {datetime.now().strftime('%d %b %Y, %H:%M')}"
-        #         f"</font>",
-        #         normal_style
-        #     )
-        # )
-
-
         doc.build(elements)
 
-        return send_file(file_path, as_attachment=True)
+        return redirect(url_for("bill_ready"))
 
     return render_template(
         "generate_bill.html",
         completed_months=completed_months
     )
 
+@app.route("/bill-ready")
+@login_required
+def bill_ready():
+    return render_template("bill_ready.html")
+
+@app.route("/download-bill")
+@login_required
+def download_bill():
+
+    file_path = os.path.join(
+        BILL_FOLDER,
+        f"milk_bill_{current_user.id}.pdf"
+    )
+
+    if not os.path.exists(file_path):
+        flash("Bill not found. Please generate again.")
+        return redirect(url_for("generate_bill"))
+
+    return send_file(file_path)
 
 # Create tables automatically when app starts
 with app.app_context():

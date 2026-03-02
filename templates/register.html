@@ -8,19 +8,47 @@
 
     <form method="POST">
 
+        <!-- Mobile -->
         <div class="input-group-custom">
             <i class="fa-solid fa-phone"></i>
-            <input type="text" name="mobile" class="form-control" placeholder="Mobile Number" required>
+            <input 
+                type="tel"
+                name="mobile"
+                class="form-control"
+                placeholder="Mobile Number"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                inputmode="numeric"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);"
+                required>
         </div>
 
-        <div class="input-group-custom">
+        <!-- Password -->
+        <div class="input-group-custom password-wrapper">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <input 
+                type="password"
+                name="password"
+                id="registerPassword"
+                class="form-control"
+                placeholder="Password"
+                minlength="6"
+                required>
+            <span class="toggle-password" onclick="togglePassword('registerPassword', this)">👁</span>
         </div>
 
-        <div class="input-group-custom">
+        <!-- Confirm Password -->
+        <div class="input-group-custom password-wrapper">
             <i class="fa-solid fa-check"></i>
-            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+            <input 
+                type="password"
+                name="confirm_password"
+                id="registerConfirmPassword"
+                class="form-control"
+                placeholder="Confirm Password"
+                minlength="3"
+                required>
+            <span class="toggle-password" onclick="togglePassword('registerConfirmPassword', this)">👁</span>
         </div>
 
         <button type="submit" class="btn btn-success w-100 auth-btn">

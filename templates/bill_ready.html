@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+  <title>Bill Ready</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --success: #16a34a;
+      --success-hover: #15803d;
+      --gray: #6b7280;
+      --dark: #1f2937;
+      --bg: linear-gradient(135deg, #eef2ff, #f9fafb);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      width: 95%;
+      max-width: 420px;
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 18px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon {
+      font-size: 52px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      margin: 10px 0 8px;
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+    p {
+      color: var(--gray);
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13px;
+      margin: 12px 0;
+      border-radius: 12px;
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: var(--success-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.3);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: var(--dark);
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .divider {
+      margin: 25px 0;
+      height: 1px;
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <div class="icon">🧾</div>
+
+  <h2>Bill Generated Successfully</h2>
+  <p>Your milk bill is ready. You can view or download it below.</p>
+
+  <!-- View Bill -->
+  <a href="{{ url_for('download_bill') }}" target="_blank">
+    <button class="btn btn-primary">📄 View Bill</button>
+  </a>
+
+  <!-- Direct Download -->
+  <a href="{{ url_for('download_bill') }}" download>
+    <button class="btn btn-success">⬇ Download Bill</button>
+  </a>
+
+  <div class="divider"></div>
+
+  <!-- Back to Dashboard -->
+  <a href="{{ url_for('dashboard') }}">
+    <button class="btn btn-secondary">⬅ Back to Dashboard</button>
+  </a>
+
+</div>
+
+</body>
+</html>

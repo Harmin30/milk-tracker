@@ -8,14 +8,33 @@
 
     <form method="POST">
 
+        <!-- Mobile -->
         <div class="input-group-custom">
             <i class="fa-solid fa-phone"></i>
-            <input type="text" name="mobile" class="form-control" placeholder="Mobile Number" required>
+            <input 
+                type="tel"
+                name="mobile"
+                class="form-control"
+                placeholder="Mobile Number"
+                pattern="[0-9]{10}"
+                maxlength="10"
+                inputmode="numeric"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,10);"
+                required>
         </div>
 
-        <div class="input-group-custom">
+        <!-- Password -->
+        <div class="input-group-custom password-wrapper">
             <i class="fa-solid fa-lock"></i>
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <input 
+                type="password"
+                name="password"
+                id="loginPassword"
+                class="form-control"
+                placeholder="Password"
+                minlength="3"
+                required>
+            <span class="toggle-password" onclick="togglePassword('loginPassword', this)">👁</span>
         </div>
 
         <div class="form-check mb-3">
